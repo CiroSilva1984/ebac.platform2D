@@ -9,6 +9,9 @@ public class Player : MonoBehaviour
 
     [Header("MOVIMENTO PLAYER")]
     public float speed = 10f;
+    public float speedRun = 5f;
+
+    private float _currentSpeed;
 
     [Header("CONTROLE JUMP")]
     public float forceJump = 10f;
@@ -25,13 +28,18 @@ public class Player : MonoBehaviour
     }
     private void HandleMovement()
     {
+        if (Input.GetKey(KeyCode.LeftShift))
+            _currentSpeed = speedRun;
+        else
+            _currentSpeed = speed;
+        
         if (Input.GetKey(KeyCode.D))
         {
-            rb.velocity = new Vector2(speed, rb.velocity.y);
+            rb.velocity = new Vector2(_currentSpeed, rb.velocity.y);
             //rb.MovePosition(rb.position + velocity * Time.deltaTime);
         }
         else if (Input.GetKey(KeyCode.A)){
-            rb.velocity = new Vector2(-speed, rb.velocity.y);
+            rb.velocity = new Vector2(-_currentSpeed, rb.velocity.y);
             //rb.MovePosition(rb.position - velocity * Time.deltaTime);
         }
         //Friction sides
