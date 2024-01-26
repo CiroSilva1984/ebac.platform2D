@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 85667828}
   - component: {fileID: 85667829}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1418,8 +1418,9 @@ MonoBehaviour:
   - {fileID: 1167054143}
   - {fileID: 1740981616}
   - {fileID: 1609916964}
-  duration: 0.2
-  delay: 0.05
+  duration: 0.5
+  delay: 0.5
+  ease: 27
 --- !u!4 &1019267174
 Transform:
   m_ObjectHideFlags: 0

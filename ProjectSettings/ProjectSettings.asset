@@ -664,11 +664,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: 
+  cloudProjectId: 4e934ae7-7634-41bb-9c2f-d24076a8d45b
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: ebac.platform2D
+  organizationId: ciro-silva
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 
