@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Runtime.CompilerServices;
 
 public class Player : MonoBehaviour
 {
@@ -26,9 +27,20 @@ public class Player : MonoBehaviour
     public float delayAnim = .2f;
     public Ease ease = Ease.OutBack;
 
+    [Header("Animation Player")]
+    public string boolRun = "Run";
+    public string boolJump = "Jump";
+    public Animator animator;
+    public float playerSwipeDuration = .1f;
+
     void Start()
     {
         
+    }
+
+    private void OnValidate()
+    {
+        if (animator == null) animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -41,26 +53,46 @@ public class Player : MonoBehaviour
 
         //_isRunning = Input.GetKey(KeyCode.LeftShift);
 
-
         if (Input.GetKey(KeyCode.LeftShift))
+        {
             _currentSpeed = speedRun;
+            animator.speed = 2;
+
+        }
         else
+        {
             _currentSpeed = speed;
+            animator.speed = 1;
+        }
         
+        //Andar para frente com a tecla D
         if (Input.GetKey(KeyCode.D))
         {
             rb.velocity = new Vector2(_currentSpeed, rb.velocity.y);
-            /*if (_isRunning)
-                rb.velocity = new Vector2(speedRun, rb.velocity.y);
-            else
-                rb.velocity = new Vector2(speed, rb.velocity.y);
-            */
-            //rb.MovePosition(rb.position + velocity * Time.deltaTime);
+
+            if(rb.transform.localScale.x != 1)
+            {
+                rb.transform.DOScaleX(1, playerSwipeDuration);
+            }
+            animator.SetBool(boolRun, true);
         }
-        else if (Input.GetKey(KeyCode.A)){
+
+        //Andar para trás com a tecla A
+        else if (Input.GetKey(KeyCode.A))
+        {
             rb.velocity = new Vector2(-_currentSpeed, rb.velocity.y);
-            //rb.MovePosition(rb.position - velocity * Time.deltaTime);
+
+            if(rb.transform.localScale.x != -1)
+            {
+                rb.transform.DOScaleX(-1, playerSwipeDuration);
+            }
+            animator.SetBool(boolRun, true);
         }
+        else
+        {
+            animator.SetBool(boolRun, false);
+        }
+
         //Friction sides
         if(rb.velocity.x > 0)
         {
@@ -78,6 +110,8 @@ public class Player : MonoBehaviour
         {
             rb.velocity = Vector2.up * forceJump;
             rb.transform.localScale = Vector2.one;
+
+            //animator.SetBool(boolJump, true);
 
             DOTween.Kill(rb.transform);
 

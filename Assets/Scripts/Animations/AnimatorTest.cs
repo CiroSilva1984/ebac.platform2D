@@ -6,6 +6,8 @@ public class AnimatorTest : MonoBehaviour
 {
     public Animator animator;
 
+    public KeyCode keyToTrigger = KeyCode.A;
+    public KeyCode keyToExit = KeyCode.S;
     public string triggerToPlay = "Fly";
 
     private void OnValidate()
@@ -15,9 +17,9 @@ public class AnimatorTest : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(keyToTrigger))
         {
-            animator.SetTrigger(triggerToPlay);
+            animator.SetBool(triggerToPlay, !animator.GetBool(triggerToPlay));
         }
     }
 }
