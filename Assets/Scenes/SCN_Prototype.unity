@@ -494,7 +494,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 395343586}
-  friction: {x: -0.1, y: 0}
+  friction: {x: -0.23, y: 0}
   speed: 5
   speedRun: 15
   forceJump: 25
