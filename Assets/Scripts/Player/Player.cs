@@ -23,20 +23,14 @@ public class Player : MonoBehaviour
     [Header("ANIMATION SETUP")]
     public float scaleJumpY = 1.5f;
     public float scaleJumpX = .5f;
-    public float duratioAnim = .3f;
+    public float durationAnimation = .3f;
     public float delayAnim = .2f;
     public Ease ease = Ease.OutBack;
 
-    [Header("Animation Player")]
+    [Header("ANIMATION PLAYER")]
     public string boolRun = "Run";
-    public string boolJump = "Jump";
     public Animator animator;
     public float playerSwipeDuration = .1f;
-
-    void Start()
-    {
-        
-    }
 
     private void OnValidate()
     {
@@ -74,7 +68,7 @@ public class Player : MonoBehaviour
             {
                 rb.transform.DOScaleX(1, playerSwipeDuration);
             }
-            animator.SetBool(boolRun, true);
+                animator.SetBool(boolRun, true);
         }
 
         //Andar para trás com a tecla A
@@ -109,18 +103,21 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             rb.velocity = Vector2.up * forceJump;
-            rb.transform.localScale = Vector2.one;
+            //rb.transform.localScale = Vector2.one;
 
-            //animator.SetBool(boolJump, true);
 
             DOTween.Kill(rb.transform);
 
             HandleScaleJump();
         }
+            if(rb.transform.position.y > .1f)
+            {
+                animator.SetBool(boolRun, false);
+            }
     }
     private void HandleScaleJump()
     {
-        rb.transform.DOScaleY(scaleJumpY, duratioAnim).SetEase(ease).SetDelay(delayAnim).SetLoops(2, LoopType.Yoyo);
-        rb.transform.DOScaleX(scaleJumpX, duratioAnim).SetEase(ease).SetDelay(delayAnim).SetLoops(2, LoopType.Yoyo);
+        rb.transform.DOScaleY(scaleJumpY, durationAnimation).SetEase(ease).SetDelay(delayAnim).SetLoops(2, LoopType.Yoyo);
+        //rb.transform.DOScaleX(scaleJumpX, durationAnimation).SetEase(ease).SetLoops(2, LoopType.Yoyo);
     }
 }

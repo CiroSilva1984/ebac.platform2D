@@ -500,11 +500,10 @@ MonoBehaviour:
   forceJump: 25
   scaleJumpY: 1.5
   scaleJumpX: 0.5
-  duratioAnim: 0.5
+  durationAnimation: 0.3
   delayAnim: 0
   ease: 27
   boolRun: Run
-  boolJump: Jump
   animator: {fileID: 1539210201}
   playerSwipeDuration: 0.1
 --- !u!114 &395343591
