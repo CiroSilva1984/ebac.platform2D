@@ -236,6 +236,7 @@ MonoBehaviour:
   healthBase: {fileID: 11177215}
   animator: {fileID: 886444900}
   triggerAttack: Attack
+  triggerKill: Death
 --- !u!50 &11177214
 Rigidbody2D:
   serializedVersion: 4
@@ -269,8 +270,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a50d47d63cc95742acbbee3361b430f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startLife: 10
-  destroyOnKill: 1
+  startLife: 3
+  destroyOnKill: 0
   delayToKill: 0.05
   _flashColors: {fileID: 0}
 --- !u!114 &11177216

@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class HealthBase : MonoBehaviour
 {
+    //public Action<T> OnKill;
+
     [Header("LIFE PLAYER")]
     public int startLife = 10;
 
@@ -52,7 +56,8 @@ public class HealthBase : MonoBehaviour
         if (destroyOnKill)
         {
             Destroy(gameObject, delayToKill);
-            Debug.Log("Player is Dead!");
+            //Debug.Log("Player is Dead!");
         }
+        //OnKill.Invoke();
     }
 }
