@@ -14,7 +14,7 @@ public class EnemyBase : MonoBehaviour
     public string triggerAttack = "Attack";
     public string triggerKill = "Death";
 
-    /*private void Awake()
+    private void Awake()
     {
         if(healthBase != null)
         {
@@ -27,7 +27,6 @@ public class EnemyBase : MonoBehaviour
         healthBase.OnKill -= OnEnemyKill;
         PlayKillAnimation();
     }
-    */
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
