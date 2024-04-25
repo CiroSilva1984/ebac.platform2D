@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class HealthBase : MonoBehaviour
 {
-    //public Action OnKill;
+    public Action OnKill;
 
     [Header("LIFE PLAYER")]
     public int startLife = 10;
@@ -58,6 +58,6 @@ public class HealthBase : MonoBehaviour
             Destroy(gameObject, delayToKill);
             //Debug.Log("Player is Dead!");
         }
-        //OnKill?.Invoke();
+        OnKill?.Invoke();
     }
 }
