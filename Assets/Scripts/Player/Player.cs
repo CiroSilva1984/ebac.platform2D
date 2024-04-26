@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 public class Player : MonoBehaviour
 {
     public Rigidbody2D rb;
+    public HealthBase healthBase;
     public Vector2 friction = new Vector2(-.1f, 0);
 
     [Header("MOVIMENTO PLAYER")]
@@ -31,10 +32,25 @@ public class Player : MonoBehaviour
     public string boolRun = "Run";
     public Animator animator;
     public float playerSwipeDuration = .1f;
+    public string triggerDeath = "Death";
 
     private void OnValidate()
     {
         if (animator == null) animator = GetComponent<Animator>();
+    }
+
+    private void Awake()
+    {
+        if(healthBase != null)
+        {
+            healthBase.OnKill += OnPlayerKill;
+        }
+    }
+
+    private void OnPlayerKill()
+    {
+        healthBase.OnKill -= OnPlayerKill;
+        animator.SetTrigger(triggerDeath);
     }
 
     void Update()
@@ -119,5 +135,9 @@ public class Player : MonoBehaviour
     {
         rb.transform.DOScaleY(scaleJumpY, durationAnimation).SetEase(ease).SetDelay(delayAnim).SetLoops(2, LoopType.Yoyo);
         //rb.transform.DOScaleX(scaleJumpX, durationAnimation).SetEase(ease).SetLoops(2, LoopType.Yoyo);
+    }
+    public void DestrouMe()
+    {
+        Destroy(gameObject);
     }
 }
