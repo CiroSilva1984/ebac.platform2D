@@ -9,7 +9,7 @@ public class ItemManager : Singleton<ItemManager>
 {
     //public Text score;
     public TextMeshProUGUI score;
-    public int coins;
+    public SOInt coins;
 
     private void Start()
     {
@@ -18,13 +18,19 @@ public class ItemManager : Singleton<ItemManager>
 
     private void Reset()
     {
-        coins = 0;
+        coins.value = 0;
         score.text = coins.ToString();
     }
 
     public void AddCoins(int amount = 1)
     {
-        coins += amount;
-        score.text = coins.ToString();
+        coins.value += amount;
+        score.text = coins.value.ToString();
     }
+    /*
+     private void UpdateUI()
+    {
+        UiInGameManager.UpdateTextCoins(coins.value.ToString());
+    }
+    */
 }

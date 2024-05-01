@@ -8,35 +8,43 @@ public class Player : MonoBehaviour
 {
     public Rigidbody2D rb;
     public HealthBase healthBase;
-    public Vector2 friction = new Vector2(-.1f, 0);
+    private float _currentSpeed;
 
-    [Header("MOVIMENTO PLAYER")]
+    private Animator _currentPlayer;
+    //public Animator animator; //Faz parte do Header (ANIMATION PLAYER)
+
+    /*[Header("MOVIMENTO PLAYER")]
+    public Vector2 friction = new Vector2(-.1f, 0);
     public float speed = 10f;
     public float speedRun = 5f;
 
     //private bool _isRunning = false;
 
-    private float _currentSpeed;
 
     [Header("CONTROLE JUMP")]
     public float forceJump = 10f;
 
     [Header("ANIMATION SETUP")]
-    public float scaleJumpY = 1.5f;
+    //public float scaleJumpY = 1.5f;
     public float scaleJumpX = .5f;
-    public float durationAnimation = .3f;
+    //public float durationAnimation = .3f;
     public float delayAnim = .2f;
     public Ease ease = Ease.OutBack;
+    public SOFloat SoScaleJumpY;
+    //public SOFloat SoScaleJumpX;
+    public SOFloat SoDurationAnimation;
 
     [Header("ANIMATION PLAYER")]
     public string boolRun = "Run";
-    public Animator animator;
     public float playerSwipeDuration = .1f;
-    public string triggerDeath = "Death";
+    public string triggerDeath = "Death";*/
+
+    [Header("SETUP")]
+    public SOPlayerSetup soPlayerSetup;
 
     private void OnValidate()
     {
-        if (animator == null) animator = GetComponent<Animator>();
+        if (_currentPlayer == null) _currentPlayer = GetComponent<Animator>();
     }
 
     private void Awake()
@@ -45,12 +53,14 @@ public class Player : MonoBehaviour
         {
             healthBase.OnKill += OnPlayerKill;
         }
+
+        _currentPlayer = Instantiate(soPlayerSetup.playerAnimator, transform);
     }
 
     private void OnPlayerKill()
     {
         healthBase.OnKill -= OnPlayerKill;
-        animator.SetTrigger(triggerDeath);
+        _currentPlayer.SetTrigger(soPlayerSetup.triggerDeath);
     }
 
     void Update()
@@ -65,14 +75,14 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            _currentSpeed = speedRun;
-            animator.speed = 2;
+            _currentSpeed = soPlayerSetup.speedRun;
+            _currentPlayer.speed = 2;
 
         }
         else
         {
-            _currentSpeed = speed;
-            animator.speed = 1;
+            _currentSpeed = soPlayerSetup.speed;
+            _currentPlayer.speed = 1;
         }
         
         //Andar para frente com a tecla D
@@ -82,9 +92,9 @@ public class Player : MonoBehaviour
 
             if(rb.transform.localScale.x != 1)
             {
-                rb.transform.DOScaleX(1, playerSwipeDuration);
+                rb.transform.DOScaleX(1, soPlayerSetup.playerSwipeDuration);
             }
-                animator.SetBool(boolRun, true);
+                _currentPlayer.SetBool(soPlayerSetup.boolRun, true);;
         }
 
         //Andar para trás com a tecla A
@@ -94,22 +104,22 @@ public class Player : MonoBehaviour
 
             if(rb.transform.localScale.x != -1)
             {
-                rb.transform.DOScaleX(-1, playerSwipeDuration);
+                rb.transform.DOScaleX(-1, soPlayerSetup.playerSwipeDuration); ;
             }
-            animator.SetBool(boolRun, true);
+            _currentPlayer.SetBool(soPlayerSetup.boolRun, true);
         }
         else
         {
-            animator.SetBool(boolRun, false);
+            _currentPlayer.SetBool(soPlayerSetup.boolRun, false);
         }
 
         //Friction sides
         if(rb.velocity.x > 0)
         {
-            rb.velocity += friction;
+            rb.velocity += soPlayerSetup.friction;
         }else if(rb.velocity.x < 0)
         {
-            rb.velocity -= friction;
+            rb.velocity -= soPlayerSetup.friction;
         }
 
     }
@@ -118,7 +128,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            rb.velocity = Vector2.up * forceJump;
+            rb.velocity = Vector2.up * soPlayerSetup.forceJump;
             //rb.transform.localScale = Vector2.one;
 
 
@@ -128,15 +138,15 @@ public class Player : MonoBehaviour
         }
             if(rb.transform.position.y > .1f)
             {
-                animator.SetBool(boolRun, false);
+                _currentPlayer.SetBool(soPlayerSetup.boolRun, false);
             }
     }
     private void HandleScaleJump()
     {
-        rb.transform.DOScaleY(scaleJumpY, durationAnimation).SetEase(ease).SetDelay(delayAnim).SetLoops(2, LoopType.Yoyo);
+        rb.transform.DOScaleY(soPlayerSetup.scaleJumpY, soPlayerSetup.durationAnimation).SetEase(soPlayerSetup.ease).SetDelay(soPlayerSetup.delayAnim).SetLoops(2, LoopType.Yoyo);
         //rb.transform.DOScaleX(scaleJumpX, durationAnimation).SetEase(ease).SetLoops(2, LoopType.Yoyo);
     }
-    public void DestrouMe()
+    public void DestroyMe()
     {
         Destroy(gameObject);
     }

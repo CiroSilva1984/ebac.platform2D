@@ -7,6 +7,6 @@ public class PlayerDestroyHelper : MonoBehaviour
     public Player player;
 public void KillPlayer()
     {
-        player.DestrouMe();
+        player.DestroyMe();
     }
 }
