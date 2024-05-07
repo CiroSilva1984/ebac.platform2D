@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System.Runtime.CompilerServices;
+using DG.Tweening.Core.Easing;
+using Unity.VisualScripting;
 
 public class Player : MonoBehaviour
 {
     public Rigidbody2D rb;
     public HealthBase healthBase;
+    private FlashColors flashColors;
     private float _currentSpeed;
 
     private Animator _currentPlayer;
@@ -53,8 +56,9 @@ public class Player : MonoBehaviour
         {
             healthBase.OnKill += OnPlayerKill;
         }
-
         _currentPlayer = Instantiate(soPlayerSetup.playerAnimator, transform);
+        _currentPlayer.GetComponentInChildren<GunBase>().playerSideReference = transform;
+        _currentPlayer.GetComponentInChildren<PlayerDestroyHelper>().player = this;
     }
 
     private void OnPlayerKill()
